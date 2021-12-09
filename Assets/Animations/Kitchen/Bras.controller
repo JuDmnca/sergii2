@@ -42,7 +42,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -623603649343465320, guid: 20e380a0c9a0d4773aa74edff3163766,
+  m_Motion: {fileID: -623603649343465320, guid: 911227d6319a3409da03f14503dd70b3,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -55,7 +55,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Bread
+  m_Name: Bras
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
