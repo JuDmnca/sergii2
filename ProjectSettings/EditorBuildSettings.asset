@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PreviewCity.unity
     guid: 2e1c47bbf701049feba05471b2616e43
+  - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: e93d8f51312c34c8e8fdea536bffb588
+  - enabled: 1
+    path: Assets/Scenes/Sergii.unity
+    guid: bac0ef5b9f8204b0ab6703e512942e09
+  - enabled: 1
+    path: Assets/Scenes/Kitchen.unity
+    guid: c21671a4795e545b480f10d25d08dc58
   m_configObjects: {}

@@ -7,7 +7,7 @@ public class BerryPostProcess : MonoBehaviour
 {
     public Volume berryVolume;
     public Volume noBerryVolume;
-    private float berryInfluence = 1f;
+    private float berryInfluence = 0f;
 
     // Update is called once per frame
     void Update()
