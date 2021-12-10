@@ -68,7 +68,7 @@ public class Berry : MonoBehaviour
             isWaiting = false;
             animator.speed = 1f;
             animator.SetTrigger("CancelBerry");
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2.5f);
             berry.SetActive(false);
         }
     }
