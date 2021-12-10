@@ -30,11 +30,22 @@ public class Bread : Task
     private bool ended = false;
     private bool isCutting = false;
 
+    public GameObject bloodStep1_1;
+    public GameObject bloodStep1_2;
+    public GameObject bloodStep2_1;
+    public GameObject bloodStep2_2;
+    public GameObject bloodStep3_1;
+    public GameObject bloodStep3_2;
+    public GameObject bloodStep4_1;
+    public GameObject bloodStep4_2;
+    private GameObject[][] bloodArray;
+
     public void Start()
     {
         InitAnimations();
         InitTooltips();
         InitAudio();
+        InitBlood();
     }
 
     void InitAnimations() {
@@ -52,6 +63,20 @@ public class Bread : Task
         cutTooltipDest = cutTooltipTransform.anchoredPosition.x;
         initCutTooltipPos = cutTooltipDest;
         berryDest = berryTransform.anchoredPosition.x;
+    }
+
+    void InitBlood()
+    {
+        bloodArray = new GameObject[stepsTotal][];
+        bloodArray[0] = new GameObject[] { bloodStep1_1, bloodStep1_2 };
+        bloodArray[1] = new GameObject[] { bloodStep2_1, bloodStep2_2 };
+        bloodArray[2] = new GameObject[] { bloodStep3_1, bloodStep3_2 };
+        bloodArray[3] = new GameObject[] { bloodStep4_1, bloodStep4_2 };
+
+        HideAllBlood();
+
+        GameController.Instance.OnNoBerry += ShowCurrentBlood;
+        GameController.Instance.OnEatBerry += HideAllBlood;
     }
 
     public void Update()
@@ -81,7 +106,7 @@ public class Bread : Task
 
         speed = 3f - (Mathf.Abs(sliderPosition) * 2f);
         _audio.pitch = speed * multiplier;
-        _audio.Play();
+        StartCoroutine(PlayAudio());
 
         isCutting = true;
 
@@ -90,6 +115,11 @@ public class Bread : Task
         sergeAnimator.speed = speed;
 
         sergeAnimator.Play("cut", -1, sergeCutProgress + 0.001f);
+    }
+
+    IEnumerator PlayAudio() {
+        yield return new WaitForSeconds(0.5f);
+        _audio.Play();
     }
 
     void HandleCutOver() {
@@ -103,6 +133,9 @@ public class Bread : Task
 
         if (step == 1) {
             GameController.Instance.CancelBerry();
+        }
+        if (!GameController.Instance.IsOnBerry()) {
+            ShowCurrentBlood();
         }
     }
 
@@ -140,5 +173,27 @@ public class Bread : Task
         GameController.Instance.FinishTask();
         ended = true;
         SceneController.Instance.TransitionScene(new string[] {"Kitchen"}, new string[] {"Sergii"});
+    }
+
+    void ShowCurrentBlood()
+    {
+        for (int i = 0; i < step; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                bloodArray[i][j].SetActive(true);
+            }
+        }
+    }
+
+    void HideAllBlood()
+    {
+        for (int i = 0; i < stepsTotal; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                bloodArray[i][j].SetActive(false);
+            }
+        }
     }
 }
