@@ -18,6 +18,8 @@ public class ToggleTexture : MonoBehaviour
         } else {
             objectMaterial = objectMaterialDefault;
         }
+
+        objectMaterial.SetFloat("_BerryInfluence", berryInfluence);
     }
 
     void Update() {
