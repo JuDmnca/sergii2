@@ -11,6 +11,7 @@ public class Berry : MonoBehaviour
 
     void Start()
     {
+        SceneController.Instance.OnCloseScene += RemoveListeners;
         GameController.Instance.OnNoBerry += handleNoBerry;
     }
 
@@ -70,5 +71,9 @@ public class Berry : MonoBehaviour
             yield return new WaitForSeconds(1f);
             berry.SetActive(false);
         }
+    }
+
+    void RemoveListeners(string scene) {
+        GameController.Instance.OnNoBerry -= handleNoBerry;
     }
 }

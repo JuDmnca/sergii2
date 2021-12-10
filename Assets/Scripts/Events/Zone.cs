@@ -8,19 +8,24 @@ public class Zone : MonoBehaviour
     public CharacterController serge;
     public Key keyController;
     public string taskScene;
+    public int taskKey;
     private bool isInZone = false;
 
     void Start() {
-        tooltip.SetActive(false);
+        if (tooltip) {
+            tooltip.SetActive(false);
+        }
         keyController = ScriptableObject.CreateInstance<Key>();
         keyController.Init(KeyCode.F, taskScene, removeTooltip);
     }
 
     void OnTriggerEnter(Collider other){
-        if (other == serge && GameController.Instance.TaskIndex() < 1) {
+        if (other == serge && GameController.Instance.TaskIndex() == taskKey - 1) {
             isInZone = true;
             keyController.Enter();
-            tooltip.SetActive(true);
+            if (tooltip) {
+                tooltip.SetActive(true);
+            }
         }
     }
 
@@ -28,12 +33,16 @@ public class Zone : MonoBehaviour
         if (other == serge) {
             isInZone = false;
             keyController.Exit();
-            tooltip.SetActive(false);
+            if (tooltip) {
+                tooltip.SetActive(false);
+            }
         }
     }
 
     public void removeTooltip() {
-        tooltip.SetActive(false);
+        if (tooltip) {
+            tooltip.SetActive(false);
+        }
     }
 
     void Update() {
