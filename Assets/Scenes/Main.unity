@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.05444, g: 324.66895, b: 429.71777, a: 1}
+  m_IndirectSpecularColor: {r: 261.75842, g: 324.29773, b: 429.25958, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -288,6 +288,7 @@ MonoBehaviour:
   NoBerry: {fileID: 2929490370530612997, guid: 2c2859636373d4643b80b76c81f431b4, type: 2}
   TransitionBerry: {fileID: -6420410435528769558, guid: 2c2859636373d4643b80b76c81f431b4,
     type: 2}
+  Mute: {fileID: 6061160299698470991, guid: 2c2859636373d4643b80b76c81f431b4, type: 2}
 --- !u!114 &1225597674 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4225639115830865379, guid: e93c59f7586cd46018e45e997ce124fe,
@@ -331,7 +332,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425237080}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c15c9ea68f0b24bb48f83b142827cadc, type: 3}
   m_Name: 

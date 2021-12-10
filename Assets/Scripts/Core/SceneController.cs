@@ -22,8 +22,8 @@ public class SceneController : Singleton<SceneController>
     }
 
     public void OpenSceneSync(string scene, LoadSceneMode mode = LoadSceneMode.Additive) {
-        SceneManager.LoadScene(scene, mode);
         OnOpenScene?.Invoke(scene);
+        SceneManager.LoadScene(scene, mode);
     }
 
     public void TransitionScene(string[] closeScenes, string[] openScenes){

@@ -8,8 +8,10 @@ public class Ambient : MonoBehaviour
     public AudioMixerSnapshot Berry;
     public AudioMixerSnapshot NoBerry;
     public AudioMixerSnapshot TransitionBerry;
+    public AudioMixerSnapshot Mute;
     void Start()
     {
+        SceneController.Instance.OnOpenScene += HandleChangeScene;
         GameController.Instance.OnEatBerry += BackToNormalMusic;
         GameController.Instance.OnNoBerry += StartSlowMusic;
     }
@@ -33,5 +35,21 @@ public class Ambient : MonoBehaviour
     void BackToNormalMusic()
     {
         Berry.TransitionTo(.5f);
+    }
+
+    void HandleChangeScene(string scene)
+    {
+        Debug.Log(scene);
+        if(scene == "Sergii" || scene == "Kitchen")
+        {
+            if(GameController.Instance.IsOnBerry())
+            {
+                Berry.TransitionTo(.5f);
+            } else {
+                NoBerry.TransitionTo(.5f);
+            }
+        } else {
+            Mute.TransitionTo(.5f);
+        }
     }
 }
