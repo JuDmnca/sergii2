@@ -8,6 +8,8 @@ public class Collision : MonoBehaviour
     private AudioSource[] audios;
     private bool isPlaying = false;
     private CharacterController serge;
+    public Collider endCollider;
+    public AudioSource endAudio;
     public Animator animator;
     void Start() {
         audios = GetComponents<AudioSource>();
@@ -18,6 +20,8 @@ public class Collision : MonoBehaviour
         {
             isPlaying = true;
             StartCoroutine(PlaySound());
+        } else if (other == endCollider && GameController.Instance.TaskIndex() == 1) {
+            endAudio.Play();
         }
     }
 
