@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Bread : Task
 {
-    public GameObject hand;
     public Animator handAnimator;
-
-    public GameObject bread;
     public Animator breadAnimator;
+    public Animator sergeAnimator;
+    private float sergeCutProgress;
 
     public RectTransform cursorTransform;
     public RectTransform sliderTransform;
@@ -27,16 +26,24 @@ public class Bread : Task
     public float multiplier = 1.0f;
 
     private int step = 0;
-    private int stepsTotal = 5;
+    private int stepsTotal = 4;
     private bool ended = false;
+    private bool isCutting = false;
 
     public void Start()
     {
+        InitAnimations();
         InitTooltips();
         InitAudio();
-        StartCoroutine(CancelBerry());
     }
 
+    void InitAnimations() {
+        KitchenController.Instance.OnCutOver += HandleCutOver;
+
+        handAnimator.speed = 0;
+        breadAnimator.speed = 0;
+        sergeAnimator.speed = 0;
+    }
     void InitAudio() {
         _audio = GetComponent<AudioSource>();
     }
@@ -57,16 +64,11 @@ public class Bread : Task
             // Animate tooltips
             MoveTooltips();
 
-            // Translate hand when the animation is finished
-            if(handAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
-            {
-                MoveHand();
-            }
-
             // Animate on click when the animation is not already playing
-            if(Input.GetButtonDown("Fire1") && (handAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 || !handAnimator.GetBool("isCutting")))
+            if(Input.GetButtonDown("Fire1") && (!isCutting))
             {
                 CutBread();
+
             }
         } else if (step == stepsTotal && ended == false) {
             EndTask();
@@ -81,13 +83,27 @@ public class Bread : Task
         _audio.pitch = speed * multiplier;
         _audio.Play();
 
-        handAnimator.SetBool("isCutting", true);
-        handAnimator.speed = speed;
-        handAnimator.Play("cut", -1, 0f);
+        isCutting = true;
 
-        breadAnimator.SetBool("isCutting", true);
+        handAnimator.speed = speed;
         breadAnimator.speed = speed;
-        breadAnimator.Play("cut", -1, 0f);
+        sergeAnimator.speed = speed;
+
+        sergeAnimator.Play("cut", -1, sergeCutProgress + 0.001f);
+    }
+
+    void HandleCutOver() {
+        sergeAnimator.speed = 0;
+        sergeCutProgress = sergeAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        step += 1;
+        isCutting = false;
+
+        handAnimator.speed = 0;
+        breadAnimator.speed = 0;
+
+        if (step == 1) {
+            GameController.Instance.CancelBerry();
+        }
     }
 
     void MoveTooltips() {
@@ -106,18 +122,6 @@ public class Bread : Task
             cutX += speedTooltips;
         }
         cutTooltipTransform.anchoredPosition = new Vector2(cutX, cutTooltipTransform.anchoredPosition.y);
-    }
-
-    void MoveHand() {
-        if(handAnimator.GetBool("isCutting"))
-        {
-            hand.transform.Translate(0, 0, 0.1f);
-
-            handAnimator.SetBool("isCutting", false);
-            breadAnimator.SetBool("isCutting", false);
-
-            step += 1;
-        }
     }
 
     void MoveSlider() {

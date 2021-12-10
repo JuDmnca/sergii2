@@ -21,11 +21,13 @@ public class Berry : MonoBehaviour
             if (isWaiting) {
                 StartCoroutine(HideBerry());
 
+                animator.speed = 1f;
                 animator.SetTrigger("TakeBerry");
                 isWaiting = false;
             } else {
                 StartCoroutine(ShowAndHideBerry());
 
+                animator.speed = 1f;
                 animator.SetTrigger("EatBerry");
             }
         }
@@ -46,6 +48,7 @@ public class Berry : MonoBehaviour
 
     void handleNoBerry()
     {
+        animator.speed = 1f;
         animator.SetTrigger("GetBerry");
         StartCoroutine(ShowBerry());
         StartCoroutine(CancelBerry());
@@ -62,6 +65,7 @@ public class Berry : MonoBehaviour
         yield return new WaitForSeconds(5f);
         if (!GameController.Instance.IsOnBerry()) {
             isWaiting = false;
+            animator.speed = 1f;
             animator.SetTrigger("CancelBerry");
             yield return new WaitForSeconds(1f);
             berry.SetActive(false);
