@@ -184,7 +184,7 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
-    - _BerryInfluence: -0.009999329
+    - _BerryInfluence: 0.08000066
     - _Blend: 0
     - _BlendMode: 0
     - _BumpScale: 1
