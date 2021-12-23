@@ -77,6 +77,8 @@ public class Bread : Task
 
         GameController.Instance.OnNoBerry += ShowCurrentBlood;
         GameController.Instance.OnEatBerry += HideAllBlood;
+
+        SceneController.Instance.OnCloseScene += RemoveListeners;
     }
 
     public void Update()
@@ -195,5 +197,10 @@ public class Bread : Task
                 bloodArray[i][j].SetActive(false);
             }
         }
+    }
+
+    void RemoveListeners(string scene) {
+        GameController.Instance.OnNoBerry -= ShowCurrentBlood;
+        GameController.Instance.OnEatBerry -= HideAllBlood;
     }
 }
